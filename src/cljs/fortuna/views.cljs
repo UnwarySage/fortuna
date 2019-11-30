@@ -52,19 +52,23 @@
        [:p.flow-text
         "Fortuna is a small experiment, teaching myself front end development, with
         the goals of making something small, usable, and getting it out the door. 
-        It's very much alpha software for the foreseeable future, so proceed with caution."]]
-      [:div.column
-       [:h1.title "Made with"]
+        It's very much alpha software for the foreseeable future, so proceed with caution."]
+       [:a {:href "https://github.com/UnwarySage/fortuna/"}
+        "Check out the source"]
+       [:div.column
+        [:h1.title "Made with"]]
        [:ul
-        [:li 
-         [:a {:href "https://clojurescript.org/"}
-          "clojure-script"]]
-        [:li
-         [:a {:href "https://github.com/Day8/re-frame"}
-          "re-frame"]]
-        [:li
-         [:a {:href "https://bulma.io/"}
-          "bulma.io"]]]]]]]])
+         [:li 
+          [:a {:href "https://clojurescript.org/"}
+           "clojure-script"]
+          [:li
+           [:a {:href "https://github.com/Day8/re-frame"}
+            "re-frame"]]
+          [:li
+           [:a {:href "https://bulma.io/"}
+            "bulma.io"]]]]]]]]])
+     
+      
 
 ;; dice
 (defn roll-dialog
