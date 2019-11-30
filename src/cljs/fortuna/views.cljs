@@ -24,8 +24,7 @@
              [:about-panel "About" "#/about"]]))]]))          
              
 (defn home-panel []
-    [:div
-     
+    [:div     
      [:div.hero.is-primary.is-bold.is-small.is-hidden-touch
       [:div.hero-body
        [:div
@@ -36,17 +35,36 @@
       [:div
        [:h1.title "A no-muss RPG dice roller"]]]])
   
-       
-
 ;; about
 
 (defn about-panel []
   [:div
+   [:div.hero.is-small.is-primary.is-bold.is-hidden-touch
+    [:div.hero-body
+     [:h1.title "Fortuna"]
+     [:h1.subtitle "version 0.1.0"]]]
    [tab-bar]
-   [:h1 "This is the About Page."]
-   [:div
-    [:a {:href "#/"}
-     "go to Home Page"]]])
+   [:div.container
+    [:div.box
+     [:div.columns
+      [:div.column
+       [:h1.title "Fortuna"]
+       [:p.flow-text
+        "Fortuna is a small experiment, teaching myself front end development, with
+        the goals of making something small, usable, and getting it out the door. 
+        It's very much alpha software for the foreseeable future, so proceed with caution."]]
+      [:div.column
+       [:h1.title "Made with"]
+       [:ul
+        [:li 
+         [:a {:href "https://clojurescript.org/"}
+          "clojure-script"]]
+        [:li
+         [:a {:href "https://github.com/Day8/re-frame"}
+          "re-frame"]]
+        [:li
+         [:a {:href "https://bulma.io/"}
+          "bulma.io"]]]]]]]])
 
 ;; dice
 (defn roll-dialog
@@ -108,8 +126,9 @@
      [:h1.title "Dice"]
      [:h1.subtitle (str "Lucky Number: " (roll/roll-die 6))]]]
    [tab-bar]
-   [roll-dialog 1]
-   [roll-history]]) 
+   [:div.container
+    [roll-dialog 1]
+    [roll-history]]]) 
    
 
 ;; main
