@@ -1,5 +1,12 @@
 {
-  "devDependencies": {
+"name": "Fortuna",
+"homepage": "https://github.com/UnwarySage/fortuna",
+ "scripts":{
+   "build": "lein clean && lein prod",  
+   "predeploy": "npm run build",
+   "deploy": "gh-pages -d resources/public"
+ },
+ "devDependencies": {
     "shadow-cljs": "2.8.76"
   },
   "dependencies": {
