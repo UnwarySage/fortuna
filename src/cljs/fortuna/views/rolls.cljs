@@ -1,6 +1,7 @@
 (ns fortuna.views.rolls
   (:require
    [re-frame.core :as re-frame]
+   [reagent.core :as re]
    [fortuna.subs :as subs]
    [fortuna.views.common :as common]
    [fortuna.roller :as roll]))
@@ -18,22 +19,29 @@
       "Roll"]]))
 
 (defn edit-roll [roll-id]
-  (let [roll-data (re-frame/subscribe [:subs/roll-data])]
+  (let [roll-data (re-frame/subscribe [:subs/roll-data roll-id])]
     [:div
      [:div.panel
-      [:div.panel-heading "Edit Dice Roll"]
+      [:div.panel-heading (str "Edit " (:name @roll-data))]
       [:div.panel-block
        [:div
         [:div.field
          [:label.label "Amount"]
          [:div.control
-          [:input.input {:type "number" :placeholder "Number to roll"}]]]
+          [:input.input {:type "number"
+                         :placeholder (str (:amount @roll-data))
+                         :on-change (fn [e]
+                                      (re-frame/dispatch
+                                       [:modify-roll roll-id {:amount (-> e .-target .-value js/parseInt)}]))}]]]
         [:div.field
          [:label.label "Sides"]
          [:div.control
-          [:input.input {:type "number" :placeholder "Number of sides"}]]]
-        [:div.panel-block
-         [:button.button "Save"]]]]]]))
+          [:input.input {:type "number"
+                         :placeholder (str (:sides @roll-data))
+                         :on-change (fn [e]
+                                      (re-frame/dispatch
+                                       [:modify-roll roll-id {:sides
+                                                              (-> e .-target .-value js/parseInt)}]))}]]]]]]]))
 
 (defn roll-history []
   (let [roll-history (re-frame/subscribe [:subs/roll-history])]
@@ -68,10 +76,10 @@
      [:h1.subtitle (str "Lucky Number: " (roll/roll-die 6))]]]
    [common/tab-bar]
    [:div.container
-    [roll-dialog 1]
+    [edit-roll 1]
     [:div.tile.is-ancestor
      [:div.tile.is-parent
-      [roll-tile 1] 
+      [roll-tile 1]
       [roll-tile 1]
       [roll-tile 1]
       [roll-tile 1]]]]])
