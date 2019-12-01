@@ -19,17 +19,17 @@
         the goals of making something small, usable, and getting it out the door. 
         It's very much alpha software for the foreseeable future, so proceed with caution."]
        [:a {:href "https://github.com/UnwarySage/fortuna/"}
-        "Check out the source"]
-       [:div.column
-        [:h1.title "Made with"]]
-       [:ul
-        [:li
-         [:a {:href "https://clojurescript.org/"}
-          "clojure-script"]
+        "Check out the source"]]
+      [:div.column
+       [:h1.title "Made with"
+        [:ul
          [:li
-          [:a {:href "https://github.com/Day8/re-frame"}
+          [:a.is-size-4 {:href "https://clojurescript.org/"}
+           "clojure-script"]]
+         [:li
+          [:a.is-size-4 {:href "https://github.com/Day8/re-frame"}
            "re-frame"]]
          [:li
-          [:a {:href "https://bulma.io/"}
+          [:a.is-size-4 {:href "https://bulma.io/"}
            "bulma.io"]]]]]]]]])
 
