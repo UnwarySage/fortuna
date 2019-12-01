@@ -16,9 +16,12 @@
             (assoc db :active-panel active-panel)))
 
 (re-frame/reg-event-db
- ::modify-roll
+ :modify-roll
  (fn-traced [db [_ roll-id new-roll-data]]
-            (update-in db [:rolls roll-id] merge new-roll-data)))
+            (if
+              (every? #(or (string? %) (integer? %)) (vals new-roll-data)) 
+              (update-in db [:rolls roll-id] merge new-roll-data)
+              db)))
 
 (re-frame/reg-event-db
  :make-roll
