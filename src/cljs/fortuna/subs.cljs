@@ -13,12 +13,12 @@
    (:active-panel db)))
 
 (re-frame/reg-sub
-  :subs/roll-data
-  (fn [db [sub-name roll-id]]
+ :subs/roll-data
+ (fn [db [sub-name roll-id]]
    (get (:rolls db)
         roll-id)))
 
 (re-frame/reg-sub
-  :subs/roll-history
-  (fn [db _]
-    (:roll-history db)))
+ :subs/roll-history
+ (fn [db _]
+   (:roll-history db)))

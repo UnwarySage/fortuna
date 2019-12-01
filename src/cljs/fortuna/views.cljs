@@ -6,23 +6,24 @@
    [fortuna.views.about :refer [about-panel]]
    [fortuna.views.common :as common]
    [fortuna.views.rolls :refer [roll-panel]]))
-   
+
 
 
 ;; home
-            
+
+
 (defn home-panel []
-    [:div     
-     [:div.hero.is-primary.is-bold.is-small.is-hidden-touch
-      [:div.hero-body
-       [:div
-         [:h1.title "Fortuna"]
-         [:h1.subtitle "Make your fortune"]]]]
-     [common/tab-bar]
-     [:div.container
-      [:div
-       [:h1.title "A no-muss RPG dice roller"]]]])
-  
+  [:div
+   [:div.hero.is-primary.is-bold.is-small.is-hidden-touch
+    [:div.hero-body
+     [:div
+      [:h1.title "Fortuna"]
+      [:h1.subtitle "Make your fortune"]]]]
+   [common/tab-bar]
+   [:div.container
+    [:div
+     [:h1.title "A no-muss RPG dice roller"]]]])
+
 ;; main
 
 (defn- panels [panel-name]

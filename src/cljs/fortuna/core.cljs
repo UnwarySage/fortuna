@@ -5,9 +5,7 @@
    [fortuna.events :as events]
    [fortuna.routes :as routes]
    [fortuna.views :as views]
-   [fortuna.config :as config]
-   ))
-
+   [fortuna.config :as config]))
 
 (defn dev-setup []
   (when config/debug?

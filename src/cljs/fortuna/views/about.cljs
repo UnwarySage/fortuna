@@ -1,6 +1,6 @@
 (ns fortuna.views.about
   (:require
-    [fortuna.views.common :as common]))
+   [fortuna.views.common :as common]))
 
 (defn about-panel []
   [:div
@@ -23,13 +23,13 @@
        [:div.column
         [:h1.title "Made with"]]
        [:ul
-         [:li 
-          [:a {:href "https://clojurescript.org/"}
-           "clojure-script"]
-          [:li
-           [:a {:href "https://github.com/Day8/re-frame"}
-            "re-frame"]]
-          [:li
-           [:a {:href "https://bulma.io/"}
-            "bulma.io"]]]]]]]]])
- 
+        [:li
+         [:a {:href "https://clojurescript.org/"}
+          "clojure-script"]
+         [:li
+          [:a {:href "https://github.com/Day8/re-frame"}
+           "re-frame"]]
+         [:li
+          [:a {:href "https://bulma.io/"}
+           "bulma.io"]]]]]]]]])
+
