@@ -5,7 +5,7 @@
    [fortuna.roller :as roll]
    [fortuna.views.about :refer [about-panel]]
    [fortuna.views.common :as common]
-   [fortuna.views.rolls :refer [roll-panel]]))
+   [fortuna.views.rolls :as roll-view]))
 
 
 
@@ -22,7 +22,7 @@
    [common/tab-bar]
    [:div.container
     [:div
-     [:h1.title "A no-muss RPG dice roller"]]]])
+     [roll-view/roll-history]]]])
 
 ;; main
 
@@ -30,7 +30,7 @@
   (case panel-name
     :home-panel [home-panel]
     :about-panel [about-panel]
-    :dice-panel [roll-panel]
+    :dice-panel [roll-view/roll-panel]
     [:div]))
 
 (defn show-panel [panel-name]

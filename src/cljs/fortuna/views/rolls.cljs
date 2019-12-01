@@ -52,6 +52,14 @@
            [:td (interpose ", " (:last-roll inp-row))]])
         (reverse @roll-history)))]]))
 
+(defn roll-tile [roll-id]
+  (let [roll-data (re-frame/subscribe [:subs/roll-data roll-id])]
+    [:div.box.tile.is-child {:on-click (fn [e]
+                                         (re-frame/dispatch [:make-roll roll-id]))}
+     [:div
+      [:h1.title.is-size-4 (:name @roll-data)]
+      [:h1.subtitle.is-size-6 (roll/roll-info-string @roll-data)]]]))
+
 (defn roll-panel []
   [:div
    [:div.hero.is-primary.is-bold.is-small.is-hidden-touch
@@ -61,5 +69,11 @@
    [common/tab-bar]
    [:div.container
     [roll-dialog 1]
-    [roll-history]]])
+    [:div.tile.is-ancestor
+     [:div.tile.is-parent
+      [roll-tile 1] 
+      [roll-tile 1]
+      [roll-tile 1]
+      [roll-tile 1]]]]])
+
 
