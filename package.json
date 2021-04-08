@@ -1,0 +1,18 @@
+{
+	"name": "fortuna",
+	"devDependencies": {
+		"shadow-cljs": "2.11.24"
+	},
+	"dependencies": {
+		"bulma": "^0.9.2",
+		"highlight.js": "10.7.1",
+		"node-sass": "^5.0.0",
+		"react": "17.0.1",
+		"react-dom": "17.0.1"
+	},
+	"scripts": {
+		"css-build": "node-sass --omit-source-map-url src/sass/fortuna.scss resources/public/fortuna.css",
+		"css-watch": "npm run css-build -- --watch",
+		"start": "npm run css-watch"
+	  }
+}
