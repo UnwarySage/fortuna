@@ -9,22 +9,34 @@
    (get db :rolls)))
 
 
-(re-frame/reg-sub
+(re-frame/reg-sub 
+ ::roll-data
+ (fn [_]
+   (re-frame/subscribe [::all-roll-data]))
+ (fn [all-roll-data [_sub_name _roll-id]]
+   (get all-roll-data 1)))
+
+
+(re-frame/reg-sub 
  ::roll-expression
- (fn [db [_sub-name roll-id]]
-   (get-in db [:rolls roll-id :expression])))
+ (fn [_sub_name roll-id]
+   (re-frame/subscribe [::roll-data roll-id]))
+ (fn [roll-data _query]
+   (:expression roll-data)))
 
 (re-frame/reg-sub
  ::expression-structure
  (fn [[_sub-name roll-id]]
-   [(re-frame/subscribe [::roll-expression roll-id])])
- (fn [[expression-string] [_sub-name _roll-id]]
+   (re-frame/subscribe [::roll-expression roll-id]))
+ (fn [expression-string [_sub-name _roll-id]]
    (par/parse-expression expression-string)))
 
 (re-frame/reg-sub
  ::roll-name
- (fn [db [_sub-name roll-id]]
-   (get-in db [:rolls roll-id :name])))
+ (fn [_sub-name roll-id]
+   (re-frame/subscribe [::roll-data roll-id]))
+ (fn [roll-data [_sub-name roll-id]]
+   (:name roll-data)))
 
 (re-frame/reg-sub
  ::expression-structure-status
