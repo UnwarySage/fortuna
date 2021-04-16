@@ -2,8 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [fortuna.subs :as subs]
-   [fortuna.events :as evs]
-   [fortuna.parser :as par]))
+   [fortuna.events :as evs]))
 
 
 (defn expression-test-area [roll-id]
@@ -24,10 +23,12 @@
 ;; Final views
 (defn roll-list-entry [roll-id] 
   (let [roll-name (re-frame/subscribe [::subs/roll-name roll-id])
-        roll-expression (re-frame/subscribe [::subs/roll-expression roll-id])]
+        roll-expression (re-frame/subscribe [::subs/roll-expression roll-id])
+        roll-status (re-frame/subscribe [::subs/expression-structure-status roll-id])]
     [:tr {:key roll-id}
      [:td [:p @roll-name]]
-     [:td [:p @roll-expression]]
+     [:td [:p {:class (when-not @roll-status
+                       "has-text-warning")} @roll-expression]]
      [:td [:a {:on-click (fn [e] 
                            (.preventDefault e)
                            (re-frame/dispatch [::evs/perform-roll roll-id]))} "Roll"]]
@@ -44,7 +45,7 @@
       [:tbody
        (doall
         (for [present-id @roll-ids]
-                (roll-list-entry present-id)))]]
+          [roll-list-entry present-id]))]]
      [:button.button {:on-click (fn [e]
                                   (.preventDefault e)
                                   (re-frame/dispatch [::evs/create-roll]))} "New Roll"]]))
@@ -84,5 +85,3 @@
      [roll-edit-area 1]]
     [parse-display-area 1]
     [roll-list]]])
-
-
