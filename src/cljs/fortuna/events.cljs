@@ -2,6 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [fortuna.db :as db]
+   [fortuna.parser :as par]
    [day8.re-frame.tracing :refer-macros [fn-traced defn-traced]]))
 
 (defn initialize-db [_ _]
@@ -13,7 +14,10 @@
 
 (defn-traced change-expression
   [db [_ roll-id new-expression]]
-  (assoc-in db [:rolls roll-id :expression] new-expression))
+  (let [new-parse (par/parse-expression new-expression)]
+    (-> db
+        (assoc-in [:rolls roll-id :expression-string] new-expression)
+        (assoc-in [:rolls roll-id :expression-structure] new-parse))))
 
 (re-frame/reg-event-db
  ::change-expression

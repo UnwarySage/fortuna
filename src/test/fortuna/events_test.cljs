@@ -5,9 +5,17 @@
 
 (deftest test-change-expression
   (let [db (evs/initialize-db :some :value)
-        after-db (evs/change-expression db [::evs/change-expression 0 "4d6"])]
-    (is (= "2d6" (get-in db [:rolls 0 :expression]) ))
-    (is (= "4d6" (get-in after-db [:rolls 0 :expression])))))
+        after-db (evs/change-expression db [::evs/change-expression 0 "4d8+7"])
+        before-parse [:expression [:dice-pool {:dice-amount 2 :dice-sides 6}]]
+        after-parse [:expression [:dice-pool {:dice-amount 4 :dice-sides 8 :bonus 7}]]]
+    ;; Does the DB have what we expect?
+    (is (= "2d6" (get-in db [:rolls 0 :expression-string])))
+    (is (= before-parse (get-in db [:rolls 0 :expression-structure])))
+    ;; now see if it updated correctly with the parse
+    (is (= "4d8+7" (get-in after-db [:rolls 0 :expression-string])))
+    (is (= after-parse (get-in after-db [:rolls 0 :expression-structure])))
+    ;; finally, an isolation test, outside of the thing we should touch, did we touch anything?
+    (is (=  (update db :rolls dissoc 0) (update after-db :rolls dissoc 0)))))
 
 (deftest test-change-roll-name 
   (let [db (evs/initialize-db :some :value)
