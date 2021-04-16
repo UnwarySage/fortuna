@@ -12,3 +12,6 @@
 
 # VS Code
 .lsp
+
+# clj-kondo
+.clj-kondo/.cache/
