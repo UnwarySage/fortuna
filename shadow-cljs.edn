@@ -1,0 +1,34 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/cljs"
+  "src/test"]
+
+ :dependencies
+ [[reagent "1.0.0"]
+  [re-frame "1.2.0"]
+  [instaparse "1.4.10"]
+  [day8.re-frame/tracing "0.6.2"]
+  [day8.re-frame/re-frame-10x "1.0.2"]]
+
+ :builds
+ {:app 
+  {:target :browser
+   :output-dir "resources/public/js/compiled"
+   :asset-path "/js/compiled"
+   :modules {:app {:init-fn fortuna.core/init}}
+   ;; Devtools setup for our app
+   :devtools 
+   {:preloads [day8.re_frame_10x.preload]
+    :http-root "resources/public"
+    :http-port 8280}
+   ;; dev mode changes
+   :dev 
+   {:compiler-options {:closure-defines
+                       {re-frame.trace.trace-enabled? true
+                        day8.re-frame.tracing.trace-enabled? true}}}
+   ;; release mode changes
+   :release
+   {:build-options
+    {:ns-aliases 
+     {day8.re-frame/tracing day8.re-frame/tracing-stubs}}}}}}
