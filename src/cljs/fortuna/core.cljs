@@ -4,8 +4,7 @@
    [re-frame.core :as re-frame]
    [fortuna.events :as events]
    [fortuna.views :as views]
-   [fortuna.config :as config]
-   ))
+   [fortuna.config :as config]))
 
 
 (defn dev-setup []
