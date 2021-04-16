@@ -2,8 +2,8 @@
 
 (def default-db
   {:name "re-frame"
-   :rolls {1 {:name "Battleaxe Damage"
-              :expression "2d6+4"}
-           2 {:name "Attackroll"
-              :expression "2d20+6kl1"}}
+   :rolls {0 {:name "Battleaxe Damage"
+              :expression "2d6"}
+           1 {:name "Attack roll"
+              :expression "2d20"}}
    :ui {:present-page "home"}})

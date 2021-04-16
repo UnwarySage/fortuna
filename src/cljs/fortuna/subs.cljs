@@ -5,7 +5,7 @@
 
 (re-frame/reg-sub
  ::all-roll-data
- (fn [db _]
+ (fn [db _query]
    (get db :rolls)))
 
 
@@ -13,13 +13,13 @@
  ::roll-data
  (fn [_]
    (re-frame/subscribe [::all-roll-data]))
- (fn [all-roll-data [_sub_name _roll-id]]
-   (get all-roll-data 1)))
+ (fn [all-roll-data [_sub_name roll-id]]
+   (get all-roll-data roll-id)))
 
 
 (re-frame/reg-sub 
  ::roll-expression
- (fn [_sub_name roll-id]
+ (fn [[_sub_name roll-id]]
    (re-frame/subscribe [::roll-data roll-id]))
  (fn [roll-data _query]
    (:expression roll-data)))
@@ -33,9 +33,9 @@
 
 (re-frame/reg-sub
  ::roll-name
- (fn [_sub-name roll-id]
+ (fn [[_sub-name roll-id]]
    (re-frame/subscribe [::roll-data roll-id]))
- (fn [roll-data [_sub-name roll-id]]
+ (fn [roll-data [_sub-name _roll-id]]
    (:name roll-data)))
 
 (re-frame/reg-sub
