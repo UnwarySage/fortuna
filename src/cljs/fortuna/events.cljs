@@ -4,10 +4,12 @@
    [fortuna.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced defn-traced]]))
 
+(defn initialize-db [_ _]
+  db/default-db)
+
 (re-frame/reg-event-db
  ::initialize-db
- (fn [_ _]
-   db/default-db))
+ initialize-db)
 
 (defn-traced change-expression
   [db [_ roll-id new-expression]]
