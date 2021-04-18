@@ -10,4 +10,4 @@
               :expression-string "2d20"
               :expression-structure 
               [:expression [:dice-pool {:dice-amount 2, :dice-sides 20}]]}}
-   :ui {:present-page "home"}})
+   :ui {:present-tab :about-tab}})

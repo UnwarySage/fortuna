@@ -4,6 +4,11 @@
    [fortuna.parser :as par]))
 
 (re-frame/reg-sub
+ ::change-ui-tab
+ (fn [db _query]
+   (get-in db [:ui :present-tab])))
+
+(re-frame/reg-sub
  ::all-roll-data
  (fn [db _query]
    (get db :rolls)))

@@ -2,86 +2,55 @@
   (:require
    [re-frame.core :as re-frame]
    [fortuna.subs :as subs]
-   [fortuna.events :as evs]))
+   [fortuna.events :as evs]
+   [fortuna.tabs.roll-edit :as roll-tab]
+   [fortuna.tabs.about :as about-tab]
+   [fortuna.tabs.roll-history :as history-tab]))
 
 
-(defn expression-test-area [roll-id]
-  (let [data (re-frame/subscribe [::subs/roll-expression roll-id])]
-    [:input {:type "text"
-             :value (str @data)
-             :on-change (fn [new-val]
-                          (re-frame/dispatch [::evs/change-expression roll-id (-> new-val .-target .-value)]))}]))
-
-(defn parse-display-area [roll-id]
-  (let [parse-structure (re-frame/subscribe [::subs/expression-structure roll-id])
-        parse-status (re-frame/subscribe [::subs/expression-structure-status roll-id])]
-    [:div
-     (if @parse-status
-       [:code (str @parse-structure)]
-       [:code "Couldn't understand that, sorry"])]))
-
-;; Final views
-(defn roll-list-entry [roll-id] 
-  (let [roll-name (re-frame/subscribe [::subs/roll-name roll-id])
-        roll-expression (re-frame/subscribe [::subs/roll-expression roll-id])
-        roll-status (re-frame/subscribe [::subs/expression-structure-status roll-id])]
-    [:tr {:key roll-id}
-     [:td [:p @roll-name]]
-     [:td [:p {:class (when-not @roll-status
-                       "has-text-warning")} @roll-expression]]
-     [:td [:a {:on-click (fn [e] 
-                           (.preventDefault e)
-                           (re-frame/dispatch [::evs/perform-roll roll-id]))} "Roll"]]
-     [:td [:a {:on-click (fn [e]
-                           (.preventDefault e)
-                           (re-frame/dispatch [::evs/edit-roll roll-id]))} "Edit"]]]))
-
-(defn roll-list 
-  "displays a list of row-entries"
-  []
-  (let [roll-ids (re-frame/subscribe [::subs/sorted-roll-ids])]
-    [:div.roll-list
-     [:table.table.is-fullwidth
-      [:tbody
-       (doall
-        (for [present-id @roll-ids]
-          [roll-list-entry present-id]))]]
-     [:button.button {:on-click (fn [e]
-                                  (.preventDefault e)
-                                  (re-frame/dispatch [::evs/create-roll]))} "New Roll"]]))
+(defn about-tab []
+  [:div
+   [:h1.title "About"]])
 
 
-(defn roll-edit-area [roll-id]
-  (let [roll-expression (re-frame/subscribe [::subs/roll-expression roll-id])
-        roll-name (re-frame/subscribe [::subs/roll-name roll-id])
-        roll-expression-status (re-frame/subscribe [::subs/expression-structure-status roll-id])]
-    [:div.card
-     [:div.panel
-      [:p.panel-heading @roll-name]
-      [:div.panel-block
-       [:input.input {:type "text"
-                      :value (str @roll-name)
-                      :on-change (fn [new-val]
-                                   (re-frame/dispatch [::evs/change-roll-name roll-id (-> new-val .-target .-value)]))}]]
-      [:div.panel-block
-       [:input.input
-        {:type "text"
-         :value (str @roll-expression)
-         :class (if @roll-expression-status
-                  "is-primary" "is-warning")
-         :on-change (fn [new-val]
-                      (re-frame/dispatch [::evs/change-expression roll-id (-> new-val .-target .-value)]))}]]
-      [:div.panel-block
-       [:button.button.is-outlined.is-fullwidth 
-        {:on-click (fn [e] (.preventDefault e))}
-        "Roll"]]]]))
+(defn error-tab []
+  [:div
+   [:h1.title.has-text-danger "Error"]
+   [:h1.subtitle
+    " You found a tab that doesn't exist"]])
+
+(def ui-mode-to-tabs 
+  {:roll-tab {:display-fn roll-tab/roll-edit-tab
+              :name "Rolls"}
+   :about-tab {:display-fn about-tab/about-tab
+               :name "About"}
+   :history-tab {:display-fn history-tab/roll-history-tab
+                 :name "History"}})
+
+(defn tab-bar-entry [tab-key]
+  (let [ui-tab (re-frame/subscribe [::subs/change-ui-tab])]
+    [:li {:class (when (= tab-key @ui-tab) "is-active")}
+     [:a {:on-click (fn [e]
+                      (.preventDefault e)
+                      (re-frame/dispatch [::evs/change-ui-tab tab-key]))}
+      (:name (get ui-mode-to-tabs tab-key))]]))
+
+(defn tab-bar []
+  [:div.tabs
+   [:ul
+    [tab-bar-entry :roll-tab]
+    [tab-bar-entry :history-tab]
+    [tab-bar-entry :about-tab]]])
+
+
+(defn main-layout []
+  (let [ui-tab (re-frame/subscribe [::subs/change-ui-tab])]
+  [:div
+   [tab-bar]
+   [:div.container
+    [(:display-fn (get ui-mode-to-tabs @ui-tab))]]]))
 
 
 (defn main-panel []
-  [:div
-   [:h1 "Fortuna"]
-   [:div.container
-    [:form
-     [roll-edit-area 1]]
-    [parse-display-area 1]
-    [roll-list]]])
+    [:div
+     [main-layout]])

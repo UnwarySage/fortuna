@@ -12,6 +12,16 @@
  ::initialize-db
  initialize-db)
 
+
+(defn-traced change-ui-tab
+  [db [_event-id new-tab]]
+  (assoc-in db [:ui :present-tab] new-tab))
+
+(re-frame/reg-event-db
+ ::change-ui-tab
+ change-ui-tab)
+
+
 (defn-traced change-expression
   [db [_ roll-id new-expression]]
   (let [new-parse (par/parse-expression new-expression)]
