@@ -14,7 +14,7 @@
    (get db :rolls)))
 
 
-(re-frame/reg-sub 
+(re-frame/reg-sub
  ::roll-data
  (fn [_]
    (re-frame/subscribe [::all-roll-data]))
@@ -22,7 +22,7 @@
    (get all-roll-data roll-id)))
 
 
-(re-frame/reg-sub 
+(re-frame/reg-sub
  ::roll-expression
  (fn [[_sub_name roll-id]]
    (re-frame/subscribe [::roll-data roll-id]))

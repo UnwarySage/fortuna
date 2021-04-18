@@ -17,7 +17,7 @@
     ;; finally, an isolation test, outside of the thing we should touch, did we touch anything?
     (is (=  (update db :rolls dissoc 0) (update after-db :rolls dissoc 0)))))
 
-(deftest test-change-roll-name 
+(deftest test-change-roll-name
   (let [db (evs/initialize-db :some :value)
         after-db (evs/change-roll-name db [::evs/change-roll-name 0 "Pumpernickel"])]
     (is (= "Battleaxe Damage" (get-in db [:rolls 0 :name])))

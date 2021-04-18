@@ -19,7 +19,7 @@
    [:h1.subtitle
     " You found a tab that doesn't exist"]])
 
-(def ui-mode-to-tabs 
+(def ui-mode-to-tabs
   {:roll-tab {:display-fn roll-tab/roll-edit-tab
               :name "Rolls"}
    :about-tab {:display-fn about-tab/about-tab
@@ -45,12 +45,12 @@
 
 (defn main-layout []
   (let [ui-tab (re-frame/subscribe [::subs/change-ui-tab])]
-  [:div
-   [tab-bar]
-   [:div.container
-    [(:display-fn (get ui-mode-to-tabs @ui-tab))]]]))
+    [:div
+     [tab-bar]
+     [:div.container
+      [(:display-fn (get ui-mode-to-tabs @ui-tab))]]]))
 
 
 (defn main-panel []
-    [:div
-     [main-layout]])
+  [:div
+   [main-layout]])

@@ -3,7 +3,7 @@
    [re-frame.core :as re-frame]
    [fortuna.db :as db]
    [fortuna.parser :as par]
-   [day8.re-frame.tracing :refer-macros [fn-traced defn-traced]]))
+   [day8.re-frame.tracing :refer-macros [defn-traced]]))
 
 (defn initialize-db [_ _]
   db/default-db)
@@ -34,9 +34,9 @@
  change-expression)
 
 
-(defn-traced change-roll-name 
+(defn-traced change-roll-name
   [db [_ roll-id new-name]]
- (assoc-in db [:rolls roll-id :name] new-name))
+  (assoc-in db [:rolls roll-id :name] new-name))
 
 (re-frame/reg-event-db
  ::change-roll-name
@@ -44,15 +44,15 @@
 
 (defn-traced create-roll
   [db _]
- (let [max-id (apply max (keys (:rolls db)))]
-   (assoc-in db [:rolls (inc max-id)]
-            {:name "New Roll"
-             :expression "2d6+1"})))
+  (let [max-id (apply max (keys (:rolls db)))]
+    (assoc-in db [:rolls (inc max-id)]
+              {:name "New Roll"
+               :expression "2d6+1"})))
 
 (re-frame/reg-event-db
  ::create-roll
  create-roll)
- 
+
 (defn-traced perform-roll
   [db [_ roll-id
        db]])

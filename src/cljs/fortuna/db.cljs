@@ -8,6 +8,6 @@
               [:expression [:dice-pool {:dice-amount 2, :dice-sides 6}]]}
            1 {:name "Attack roll"
               :expression-string "2d20"
-              :expression-structure 
+              :expression-structure
               [:expression [:dice-pool {:dice-amount 2, :dice-sides 20}]]}}
    :ui {:present-tab :about-tab}})
